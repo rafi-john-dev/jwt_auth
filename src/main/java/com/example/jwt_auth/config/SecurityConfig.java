@@ -57,6 +57,8 @@ public class SecurityConfig {
 						        "/v3/api-docs/**",
 						        "/webjars/**"
 						).permitAll()
+						
+						.requestMatchers("/", "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
 						// 2. Keep your profiles endpoint strictly locked down
 						.requestMatchers("/api/users/**").authenticated().anyRequest().authenticated())

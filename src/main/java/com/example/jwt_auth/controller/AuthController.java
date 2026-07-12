@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,43 +25,43 @@ public class AuthController {
 	public AuthController(AuthService authService) {
 		this.authService = authService;
 	}
-	
+
 	@PostMapping("register")
-	public ResponseEntity<String> registerUser(@RequestBody User userRequest)
-	{
+	public ResponseEntity<String> registerUser(@RequestBody User userRequest) {
 		try {
 			Optional<User> optionalUser = Optional.ofNullable(userRequest);
-			
+
 			String message = authService.registerUser(optionalUser);
-			
+
 			return new ResponseEntity<>(message, HttpStatus.CREATED);
-		}
-		catch(IllegalArgumentException ie) {
+		} catch (IllegalArgumentException ie) {
 			return new ResponseEntity<>(ie.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>("Un-Expected Error...!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@PostMapping("login")
-	public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest){
-		
+	public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+
 		try {
 			// Execute the login service pipeline
 			String responseMessage = authService.loginUser(loginRequest);
-			
+
 			// return HTTP 200 ok along with session confirmation string
-			 return new ResponseEntity<>(responseMessage, HttpStatus.OK);
-		}
-		catch(IllegalArgumentException ie) {
+			return new ResponseEntity<>(responseMessage, HttpStatus.OK);
+		} catch (IllegalArgumentException ie) {
 			return new ResponseEntity<>(ie.getMessage(), HttpStatus.UNAUTHORIZED);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return new ResponseEntity<>("An internal server error...! ", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
+	}
+
+	@GetMapping("/")
+	public String home() {
+		return "JWT Auth Backend is running. Swagger: /swagger-ui/index.html";
 	}
 
 }
