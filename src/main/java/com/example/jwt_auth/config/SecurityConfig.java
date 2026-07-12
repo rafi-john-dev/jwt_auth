@@ -49,7 +49,14 @@ public class SecurityConfig {
 
 				.authorizeHttpRequests(auth -> auth
 						// 1. Open up public entry to Auth, system errors, and ALL Swagger UI endpoints
-						.requestMatchers("/api/auth/**", "/error", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+						.requestMatchers(
+						        "/api/auth/**",
+						        "/error",
+						        "/swagger-ui/**",
+						        "/swagger-ui.html",
+						        "/v3/api-docs/**",
+						        "/webjars/**"
+						).permitAll()
 
 						// 2. Keep your profiles endpoint strictly locked down
 						.requestMatchers("/api/users/**").authenticated().anyRequest().authenticated())
