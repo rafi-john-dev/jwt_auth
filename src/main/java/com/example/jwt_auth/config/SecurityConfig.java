@@ -51,7 +51,7 @@ public class SecurityConfig {
 						// 1. Open up public entry to Auth, system errors, and ALL Swagger UI endpoints
 						.requestMatchers(
 						        "/api/auth/**",
-						        "/error",
+//						        "/error",
 						        "/swagger-ui/**",
 						        "/swagger-ui.html",
 						        "/v3/api-docs/**",
