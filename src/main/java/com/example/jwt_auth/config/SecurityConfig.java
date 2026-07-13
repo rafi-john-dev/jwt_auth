@@ -50,6 +50,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						// 1. Open up public entry to Auth, system errors, and ALL Swagger UI endpoints
 						.requestMatchers(
+								"/",
 						        "/api/auth/**",
 						        "/error",
 						        "/swagger-ui/**",
